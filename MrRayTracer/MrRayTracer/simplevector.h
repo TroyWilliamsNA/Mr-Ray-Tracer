@@ -1,8 +1,8 @@
-#pragma once
-
+#include <iostream>
 #include <math.h>
 #include <stdio.h>
-#include <iostream>
+
+#pragma once
 
 class simplevector
 {
@@ -13,12 +13,12 @@ public:
 	simplevector(float x1, float x2, float x3);
 	~simplevector();
 
-	float x();
-	float y();
-	float z();
-	float r();
-	float b();
-	float g();
+	float x() const;
+	float y() const;
+	float z() const;
+	float r() const;
+	float b() const;
+	float g() const;
 
 	const simplevector& operator+() const;
 	simplevector operator-() const; 
@@ -47,7 +47,7 @@ simplevector operator/(const simplevector& v, const float s);
 simplevector operator*(const float s, const simplevector& v);
 simplevector operator/(const float s, const simplevector& v);
 
-simplevector dot(const simplevector& v1, const simplevector& v2);
+float dot(const simplevector& v1, const simplevector& v2);
 simplevector cross(const simplevector& v1, const simplevector& v2);
 
 std::istream& operator>>(std::istream& is, simplevector& v);
