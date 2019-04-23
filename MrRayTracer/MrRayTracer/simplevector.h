@@ -7,7 +7,7 @@
 class simplevector
 {
 private:
-	float x[3];
+	float v[3];
 public:
 	simplevector();
 	simplevector(float x1, float x2, float x3);
@@ -49,6 +49,7 @@ simplevector operator/(const float s, const simplevector& v);
 
 float dot(const simplevector& v1, const simplevector& v2);
 simplevector cross(const simplevector& v1, const simplevector& v2);
+simplevector unit_vector(simplevector v);
 
 std::istream& operator>>(std::istream& is, simplevector& v);
 std::ostream& operator<<(std::ostream& os, simplevector& v);

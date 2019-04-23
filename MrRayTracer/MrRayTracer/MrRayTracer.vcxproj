@@ -155,6 +155,7 @@
     <ClCompile Include="simplevector.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Ray.h" />
     <ClInclude Include="simplevector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

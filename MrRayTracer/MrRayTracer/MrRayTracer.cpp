@@ -2,10 +2,45 @@
 //
 
 #include <iostream>
+#include <fstream>
+#include <cmath>
+#include "Ray.h"
+
+
+simplevector color(const Ray& r) {
+	simplevector unit_direction = unit_vector(r.direction());
+	float t = 0.5 * (unit_direction.y() + 1.0);
+	return ((1.0 - t) * simplevector(1.0, 1.0, 1.0) + t * simplevector(0.5, 0.7, 1.0));
+}
+
+void create_ppm() {
+	std::ofstream oppm("image.ppm");
+	int tx = 200;
+	int ty = 100;
+	oppm << "P3\n" << tx << " " << ty << "\n255" << std::endl;
+	simplevector bot_left_corner(-2.0, -1.0, -1.0);
+	simplevector horizontal(4.0, 0.0, 0.0);
+	simplevector vertical(0.0, 2.0, 0.0);
+	simplevector origin(0.0, 0.0, 0.0);
+	for (int i = ty - 1; i >= 0; i--) {
+		for (int j = 0; j < tx; j++) {
+			float u = float(j) / float(tx);
+			float v = float(i) / float(ty);
+			Ray curr_ray(origin, bot_left_corner + (u * horizontal) + (v * vertical));
+			simplevector ray_color = color(curr_ray);
+			int ir = int(255.99 * ray_color.r());
+			int ig = int(255.99 * ray_color.g());
+			int ib = int(255.99 * ray_color.b());
+			oppm << ir << " " << ig << " " << ib << std::endl;
+		}
+	}
+}
+
 
 int main()
 {
-    std::cout << "Hello World!\n"; 
+    std::cout << "Hello MrRay!!\n"; 
+	create_ppm();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
