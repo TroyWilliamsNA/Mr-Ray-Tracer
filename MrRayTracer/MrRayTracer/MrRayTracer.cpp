@@ -44,8 +44,8 @@ void create_ppm() {
 		for (int j = 0; j < tx; j++) {
 			simplevector AA_color(0, 0, 0);
 			for (int s = 0; s < samples; s++) {
-				float u = float(j) / float(tx);
-				float v = float(i) / float(ty);
+				float u = float(j + (rand() / (RAND_MAX + 1.0))) / float(tx);
+				float v = float(i + (rand() / (RAND_MAX + 1.0))) / float(ty);
 				Ray curr_ray = cam.get_Ray(u, v);
 				simplevector p = curr_ray.p_at_t(2.0);
 				simplevector ray_color = color(curr_ray, world);

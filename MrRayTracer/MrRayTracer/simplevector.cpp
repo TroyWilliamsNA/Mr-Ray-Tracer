@@ -80,15 +80,15 @@ simplevector& simplevector::operator/=(const simplevector& other)
 
 simplevector& simplevector::operator*=(const float scalar) {
 	(*this)[0] *= scalar;
-	(*this)[0] *= scalar;
-	(*this)[0] *= scalar;
+	(*this)[1] *= scalar;
+	(*this)[2] *= scalar;
 	return *this;
 }
 
 simplevector& simplevector::operator/=(const float scalar) {
 	(*this)[0] /= scalar;
-	(*this)[0] /= scalar;
-	(*this)[0] /= scalar;
+	(*this)[1] /= scalar;
+	(*this)[2] /= scalar;
 	return *this;
 }
 
