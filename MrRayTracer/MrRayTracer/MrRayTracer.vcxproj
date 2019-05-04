@@ -155,8 +155,12 @@
     <ClCompile Include="simplevector.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="camera.h" />
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="MeshList.h" />
     <ClInclude Include="Ray.h" />
     <ClInclude Include="simplevector.h" />
+    <ClInclude Include="sphere.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

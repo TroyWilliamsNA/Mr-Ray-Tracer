@@ -11,7 +11,7 @@ struct Ray {
 
 	simplevector origin() const { return O; }
 	simplevector direction() const { return D; }
-	simplevector r_at_p(float t) const { return O + (t * D); }
+	simplevector p_at_t(float t) const { return O + (t * D); }
 
 	simplevector O;
 	simplevector D;
