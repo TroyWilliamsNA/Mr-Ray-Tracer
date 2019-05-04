@@ -156,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h" />
+    <ClInclude Include="material.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshList.h" />
     <ClInclude Include="Ray.h" />

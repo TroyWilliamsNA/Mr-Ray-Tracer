@@ -2,10 +2,13 @@
 #include "Ray.h"
 
 
+class material;
+
 struct hit_record {
 	float t;
 	simplevector p;
 	simplevector normal;
+	material* mat_ptr;
 };
 
 class Mesh
