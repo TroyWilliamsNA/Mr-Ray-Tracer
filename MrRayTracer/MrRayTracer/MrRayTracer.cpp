@@ -13,14 +13,15 @@
 #include <random>
 #include "material.h"
 
+float FLOATMAX = std::numeric_limits<float>::max();
 
 simplevector color(const Ray& r, MeshList* world, int depth) {
 	hit_record rec;
-	if (world->hit(r, 0.001, std::numeric_limits<float>::max(), rec)) {
+	if (world->hit(r, 0.001, FLOATMAX , rec)) {
 		Ray scattered;
 		simplevector attenuation;
-		if ((depth < 50) && rec.mat_ptr->scatter(r, rec, attenuation, scattered)) {
-			return attenuation * color(scattered, world, depth++);
+		if ((depth < 30) && rec.mat_ptr->scatter(r, rec, attenuation, scattered)) {
+			return attenuation * color(scattered, world, depth+1);
 		}
 		else {
 			return simplevector(0, 0, 0);
@@ -37,22 +38,26 @@ void create_ppm() {
 	std::ofstream oppm("image.ppm");
 	int tx = 200;
 	int ty = 100;
-	int samples = 100;
+	int samples = 10;
 	oppm << "P3\n" << tx << " " << ty << "\n255" << std::endl;
 
-	Mesh* list[3];
-	list[0] = new sphere(simplevector(0, 0, -1), 0.5, new lambertian(simplevector(0.95,0.4,0.4)));
-	list[1] = new sphere(simplevector(0, -100.5, -1.0), 100, new metal(simplevector(0.3, 0.3, 0.33), 0.1));
-	list[2] = new sphere(simplevector(1, 0, -1), 0.5, new metal(simplevector(0.7, 0.7, 0.33),0.0));
-	//list[2] = new sphere(simplevector(0, -0.5, -1.0), 0.6);
-	MeshList* world = new MeshList(list, 3);
+	Mesh* list[4];
+	list[0] = new sphere(simplevector(0, 0, -1), 0.5, new lambertian(simplevector(0.1,0.2,0.5)));
+	list[1] = new sphere(simplevector(0, -100.5, -1.0), 100, new lambertian(simplevector(0.4, 0.4, 0.0)));
+	list[2] = new sphere(simplevector(1, 0, -1), 0.5, new metal(simplevector(0.6, 0.6, 0.5), 0.7));
+	list[3] = new sphere(simplevector(-1, 0, -1), 0.5, new dielectric(simplevector(0.9, 0.9, 0.9), 1.6));
+	//list[4] = new sphere(simplevector(-1, 0, -1), -0.48, new dielectric(simplevector(0.9, 0.9, 0.9), 1.6));
+	MeshList* world = new MeshList(list, 4);
 
-	Camera cam(simplevector(0, 0, 0), simplevector(-2, -1, -1),
-			   simplevector(4.0, 0.0, 0.0), simplevector(0.0, 2.0, 0.0));
+
+	simplevector lookfrom = simplevector(2, 1, 1);
+	simplevector lookat = simplevector(0, 0, -1);
+	Camera cam(90,float(tx)/float(ty),lookfrom,lookat,simplevector(0,1,0), 1 ,simplevector(lookfrom-lookat).length());
 	
 	for (int i = ty - 1; i >= 0; i--) {
+		if (i % 10 == 0) { std::cout << "remaining : " << (2*(ty * ty) * float(i)) / (float(tx * ty)) << "%" << std::endl; }
 		for (int j = 0; j < tx; j++) {
-			//std::cout << "remaining : " << (100.0 * float(i) + float(j)) / (float(tx * ty)) << "%" << std::endl;
+			
 			simplevector AA_color(0, 0, 0);
 			for (int s = 0; s < samples; s++) {
 				float u = float(j + drand48()) / float(tx);
