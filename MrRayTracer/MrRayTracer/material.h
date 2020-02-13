@@ -86,13 +86,14 @@ public:
 
 // ___________ dielectric Helper Functions ___________________
 
-bool refract(const simplevector& dir, const simplevector& norm,
+bool refract(const simplevector& dir, const simplevector& n,
 	float n_ratio, simplevector& refracted) {
 	simplevector unit = unit_vector(dir);
+	simplevector norm = unit_vector(n);
 	float dt = dot(unit, norm);
 	float discriminant = 1.0 - n_ratio * n_ratio * (1 - dt * dt);
 	if (discriminant > 0) {
-		refracted = n_ratio * (unit - norm * dt) - norm * sqrt(discriminant);
+		refracted = n_ratio*(unit - norm*dt) - norm*sqrt(discriminant);
 		return true;
 	}
 	else {
@@ -135,7 +136,7 @@ public:
 		}
 		else {
 			outward_normal = rec.normal;
-			n_ratio = (1.0 / ref_idx);
+			n_ratio = 1 / ref_idx;
 			cosine = -dot(r_in.direction(), rec.normal) / r_in.direction().length();
 		}
 		if (refract(r_in.direction(), outward_normal, n_ratio, refracted)) {
@@ -143,7 +144,6 @@ public:
 		}
 		else {
 			reflect_probability = 1.0;
-			return false;
 		}
 		if (drand48() < reflect_probability) {
 			simplevector reflected = reflect(r_in.direction(), rec.normal);

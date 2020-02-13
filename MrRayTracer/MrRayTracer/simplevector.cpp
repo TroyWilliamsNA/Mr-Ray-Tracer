@@ -33,7 +33,7 @@ const simplevector& simplevector::operator+() const {
 }
 
 simplevector simplevector::operator-() const {
-	return simplevector(-this->v[0], -this->v[1], -this->v[2]);
+	return simplevector(-1 * this->v[0], -1 * this->v[1], -1 * this->v[2]);
 }
 
 float simplevector::operator[](int i) const {
